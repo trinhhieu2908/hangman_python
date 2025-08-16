@@ -19,7 +19,7 @@ hangman_dylan/
 ├── .pylintrc              # Pylint configuration
 ├── .gitignore             # Git ignore rules
 ├── run_web_app.py         # Web application runner
-├── README.md              # This file
+└── README.md              # This file
 ```
 
 ## Setup Instructions
