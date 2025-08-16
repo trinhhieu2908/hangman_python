@@ -19,7 +19,7 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 84%;
   margin: 0 auto;
   padding: 20px;
 }
@@ -37,18 +37,16 @@ header h1 {
   margin-bottom: 0.5rem;
 }
 
-/* Main content */
-main {
-  background: white;
+/* Welcome container */
+.welcome-container {
+  margin: 0 auto;
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   margin-bottom: 2rem;
-}
-
-/* Welcome container */
-.welcome-container {
+  background: white;
   text-align: center;
+  width: 800px;
 }
 
 .welcome-message {
@@ -187,5 +185,152 @@ footer {
     display: block;
     margin: 0.5rem auto;
     max-width: 200px;
+  }
+}
+
+/* Level Selection Styles */
+
+.level-selection-container {
+  margin: 0 auto;
+  padding: 0 2rem;
+  margin: 0 auto;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+  background: white;
+  text-align: center;
+  width: 90%;
+}
+
+.level-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.level-header h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.level-header p {
+  color: #6c757d;
+  font-size: 1.2rem;
+}
+
+.level-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.level-card {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 2rem;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.level-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.level-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.level-card-header h2 {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.difficulty-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.difficulty-badge.basic {
+  background: #d4edda;
+  color: #155724;
+}
+
+.difficulty-badge.intermediate {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.level-description {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.level-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.level-features li {
+  padding: 0.5rem 0;
+  color: #28a745;
+  font-weight: 500;
+}
+
+.level-example {
+  background: #e9ecef;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.level-example strong {
+  color: #667eea;
+}
+
+.level-card-footer {
+  text-align: center;
+}
+
+.navigation-footer {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 2px solid #e9ecef;
+}
+
+/* Responsive design for level selection */
+@media (max-width: 768px) {
+  .level-options {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .level-card {
+    padding: 1.5rem;
+  }
+
+  .level-card-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .level-header h1 {
+    font-size: 2rem;
   }
 }

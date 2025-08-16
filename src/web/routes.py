@@ -1,8 +1,5 @@
 """
 Web Routes for Hangman Game
-
-Simple routes for the hangman game web interface.
-Currently implements only the home page.
 """
 
 from flask import Blueprint, render_template
@@ -17,9 +14,15 @@ def home():
     Home page with welcome message.
     
     Displays the welcome message and provides navigation to start the game.
-    For now, this is the only implemented route.
-    
-    Returns:
-        str: Rendered home template
     """
     return render_template('home.html')
+
+
+@hangman_bp.route('/select-level')
+def select_level():
+    """
+    Level selection page.
+    
+    Allows player to choose between Basic (words) and Intermediate (phrases).
+    """
+    return render_template('select_level.html')

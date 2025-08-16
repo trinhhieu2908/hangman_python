@@ -1,0 +1,58 @@
+{% extends "layout.html" %} {% block title %}Select Level - Hangman{% endblock
+%} {% block content %}
+<div class="level-selection-container">
+  <div class="level-header">
+    <h1>Choose Your Challenge</h1>
+  </div>
+
+  <div class="level-options">
+    <div class="level-card">
+      <div class="level-card-header">
+        <h2>🌟 Basic Level</h2>
+        <span class="difficulty-badge basic">Easy</span>
+      </div>
+      <div class="level-card-content">
+        <p class="level-description">
+          Perfect for beginners! Guess individual words with 4-8 letters.
+        </p>
+        <ul class="level-features">
+          <li>✅ Single words only</li>
+          <li>✅ 4-8 letter words</li>
+          <li>✅ Common vocabulary</li>
+        </ul>
+      </div>
+      <div class="level-card-footer">
+        <a href="#" class="btn btn-primary btn-large"> 🎮 Play Basic Level </a>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="level-card-header">
+        <h2>🚀 Intermediate Level</h2>
+        <span class="difficulty-badge intermediate">Medium</span>
+      </div>
+      <div class="level-card-content">
+        <p class="level-description">
+          Ready for a challenge? Guess complete phrases with multiple words!
+        </p>
+        <ul class="level-features">
+          <li>✅ Complete phrases</li>
+          <li>✅ 2-4 words per phrase</li>
+          <li>✅ Common expressions</li>
+        </ul>
+      </div>
+      <div class="level-card-footer">
+        <a href="#" class="btn btn-primary btn-large">
+          🎮 Play Intermediate Level
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="navigation-footer">
+    <a href="{{ url_for('hangman.home') }}" class="btn btn-secondary">
+      ⬅️ Back to Home
+    </a>
+  </div>
+</div>
+{% endblock %}

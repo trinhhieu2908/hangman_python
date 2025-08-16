@@ -31,3 +31,13 @@ class TestWebHome:
         response = client.get('/')
         assert response.status_code == 200
         assert "Start Game" in response.get_data(as_text=True)
+    
+    def test_start_game_button_redirects_to_level_selection(self, client):
+        """Test that Start Game button links to level selection page."""
+        # Get home page
+        response = client.get('/')
+        assert response.status_code == 200
+        
+        # Check that the Start Game button has correct href
+        html_content = response.get_data(as_text=True)
+        assert 'href="/select-level"' in html_content
