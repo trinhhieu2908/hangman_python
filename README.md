@@ -61,59 +61,16 @@ hangman_dylan/
 - Maintain code quality using pylint and flake8
 - Use type hints for better code documentation
 - Follow PEP 8 style guidelines
-- Write comprehensive docstrings for all classes and methods
 
 ## Current Status
 
 ✅ **Minimal modular structure** created  
 ✅ **Flask web application** with clean architecture  
-✅ **Welcome page** with modern, responsive design  
-✅ **YAGNI principle** applied - only what's needed  
+✅ **Welcome page** with modern, responsive design
 ✅ **Integration test** for web interface  
 ✅ **Code quality tools** configured and passing  
 ⏳ **Game logic implementation** (upcoming - TDD approach)  
 ⏳ **Core functionality** (upcoming - tests first)
-
-## Git Workflow
-
-This project is ready for version control with Git:
-
-### **Initial Setup:**
-
-```bash
-# Initialize repository
-git init
-
-# Add all files (gitignore will handle exclusions)
-git add .
-
-# Initial commit
-git commit -m "Initial project structure with Flask web app"
-
-# Add remote repository (replace with your repo URL)
-git remote add origin https://github.com/username/hangman-game.git
-
-# Push to remote
-git push -u origin main
-```
-
-### **Development Workflow:**
-
-```bash
-# Create feature branch for TDD development
-git checkout -b feature/game-logic
-
-# Make changes, add tests, implement features
-git add .
-git commit -m "Add game logic with TDD approach"
-
-# Push feature branch
-git push origin feature/game-logic
-
-# Merge when ready
-git checkout main
-git merge feature/game-logic
-```
 
 ## Next Steps
 
