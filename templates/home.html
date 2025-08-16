@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block title %}Welcome to Hangman{% endblock %} {%
+block content %}
+<div class="welcome-container">
+  <div class="welcome-message">
+    <h2>Test your word guessing skills!</h2>
+    <p>Can you solve the mystery word before the hangman is complete?</p>
+    <p>Click "Start Game" to begin your word guessing adventure!</p>
+  </div>
+
+  <div class="action-buttons">
+    <a href="#" class="btn btn-primary btn-large">🎮 Start Game</a>
+    <a href="#" class="btn btn-secondary">📋 How to Play</a>
+  </div>
+
+  <div class="game-info">
+    <h3>About This Game</h3>
+    <p>
+      Hangman is a classic word guessing game. Try to guess the hidden word by
+      selecting letters one at a time. You have limited wrong guesses before the
+      game ends!
+    </p>
+
+    <ul class="game-features">
+      <li>✅ No registration required - play as guest</li>
+      <li>✅ Clean, simple interface</li>
+      <li>✅ Built with modern web technologies</li>
+      <li>✅ Responsive design for all devices</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+"""
+Tests for Web Home Page
+
+Simple test case for the welcome message functionality.
+This follows TDD principles with a single focused test.
+"""
+
+import sys
+import os
+
+# Add src directory to path for importing modules
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+
+import pytest
+from src.web.app import create_app
+
+
+class TestWebHome:
+    """Minimal web integration test."""
+    
+    @pytest.fixture
+    def client(self):
+        """Create test client."""
+        app = create_app()
+        app.config['TESTING'] = True
+        with app.test_client() as client:
+            yield client
+    
+    def test_home_page_loads_successfully(self, client):
+        """Test that home page loads without errors."""
+        response = client.get('/')
+        assert response.status_code == 200
+        assert "Start Game" in response.get_data(as_text=True)
