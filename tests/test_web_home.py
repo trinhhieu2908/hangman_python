@@ -1,8 +1,7 @@
 """
 Tests for Web Home Page
 
-Simple test case for the welcome message functionality.
-This follows TDD principles with a single focused test.
+Follows TDD principles.
 """
 
 import sys

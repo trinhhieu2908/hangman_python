@@ -12,9 +12,6 @@ from .routes import hangman_bp
 def create_app() -> Flask:
     """
     Create and configure Flask application.
-    
-    Returns:
-        Flask: Configured Flask application instance
     """
     app = Flask(__name__, 
                 template_folder='../../templates',

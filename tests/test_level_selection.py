@@ -2,7 +2,6 @@
 Test Level Selection Functionality
 
 Tests for the level selection route and core game logic.
-Following TDD approach - these tests should fail initially.
 """
 
 import pytest
