@@ -7,6 +7,9 @@ A classic word guessing game implemented in Python using Test-Driven Development
 ```
 hangman_dylan/
 ├── src/                    # Source code
+│   ├── core/               # Game logic and functions
+│   ├── web/                # Web interface (Flask)
+│   └── utils/              # Utilities and helpers
 ├── templates/              # HTML templates
 ├── static/                 # Static files (CSS, JS, images)
 ├── tests/                  # Unit tests
@@ -17,8 +20,6 @@ hangman_dylan/
 ├── .gitignore             # Git ignore rules
 ├── run_web_app.py         # Web application runner
 ├── README.md              # This file
-└── run_web_app.py         # Web application runner
-
 ```
 
 ## Setup Instructions
