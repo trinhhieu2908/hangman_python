@@ -1,7 +1,5 @@
 """
 Test Level Selection Functionality
-
-Tests for the level selection route and core game logic.
 """
 
 import pytest
@@ -13,7 +11,6 @@ class TestLevelSelection:
 
     @pytest.fixture
     def client(self):
-        """Create test client for Flask app."""
         app = create_app()
         app.config['TESTING'] = True
         with app.test_client() as client:
@@ -36,3 +33,8 @@ class TestLevelSelection:
         response = client.get('/select-level')
         assert b'Intermediate Level' in response.data
         assert b'complete phrases' in response.data
+
+    def test_level_selection_contains_back_to_home_button(self, client):
+        """Test that level selection page contains Back to Home button."""
+        response = client.get('/select-level')
+        assert b'Back to Home' in response.data

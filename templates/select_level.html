@@ -8,27 +8,34 @@
   <div class="level-options">
     <div class="level-card">
       <div class="level-card-header">
-        <h2>🌟 Basic Level</h2>
+        <h2>🌟 {{ DIFFICULTY_LEVELS.basic.name }}</h2>
         <span class="difficulty-badge basic">Easy</span>
       </div>
       <div class="level-card-content">
         <p class="level-description">
-          Perfect for beginners! Guess individual words with 4-8 letters.
+          Perfect for beginners! Guess individual words with {{
+          DIFFICULTY_LEVELS.basic.min_word_length }}-{{
+          DIFFICULTY_LEVELS.basic.max_word_length }} letters.
         </p>
         <ul class="level-features">
-          <li>✅ Single words only</li>
-          <li>✅ 4-8 letter words</li>
+          <li>✅ {{ DIFFICULTY_LEVELS.basic.description }}</li>
+          <li>
+            ✅ {{ DIFFICULTY_LEVELS.basic.min_word_length }}-{{
+            DIFFICULTY_LEVELS.basic.max_word_length }} letters per words
+          </li>
           <li>✅ Common vocabulary</li>
         </ul>
       </div>
       <div class="level-card-footer">
-        <a href="#" class="btn btn-primary btn-large"> 🎮 Play Basic Level </a>
+        <a href="/game/basic" class="btn btn-primary btn-large">
+          🎮 Play Basic Level
+        </a>
       </div>
     </div>
 
     <div class="level-card">
       <div class="level-card-header">
-        <h2>🚀 Intermediate Level</h2>
+        <h2>🚀 {{ DIFFICULTY_LEVELS.intermediate.name }}</h2>
         <span class="difficulty-badge intermediate">Medium</span>
       </div>
       <div class="level-card-content">
@@ -36,13 +43,16 @@
           Ready for a challenge? Guess complete phrases with multiple words!
         </p>
         <ul class="level-features">
-          <li>✅ Complete phrases</li>
-          <li>✅ 2-4 words per phrase</li>
+          <li>✅ {{ DIFFICULTY_LEVELS.intermediate.description }}</li>
+          <li>
+            ✅ {{ DIFFICULTY_LEVELS.intermediate.min_words }}-{{
+            DIFFICULTY_LEVELS.intermediate.max_words }} words per phrase
+          </li>
           <li>✅ Common expressions</li>
         </ul>
       </div>
       <div class="level-card-footer">
-        <a href="#" class="btn btn-primary btn-large">
+        <a href="/game/intermediate" class="btn btn-primary btn-large">
           🎮 Play Intermediate Level
         </a>
       </div>
