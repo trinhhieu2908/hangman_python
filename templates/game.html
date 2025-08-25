@@ -1,0 +1,274 @@
+{% extends "layout.html" %} {% block title %}Hangman Game - {{ level.title() }}
+Level{% endblock %} {% block extra_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/game.css') }}"
+/>
+{% endblock %} {% block content %}
+<div class="hangman-game">
+  <!-- Simple Score Display -->
+  <div class="game-header">
+    <p>Level: {{ game_state.level }}</p>
+    <p class="score-display">Score: {{ game_state.score }}</p>
+  </div>
+
+  <!-- Main Game Area -->
+  <div class="game-main">
+    <!-- Left Side: Gallows -->
+    <div class="gallows-section">
+      <div class="gallows">
+        <!-- CSS-drawn gallows -->
+        <div class="gallows-base"></div>
+        <div class="gallows-pole"></div>
+        <div class="gallows-top"></div>
+        <div class="gallows-noose"></div>
+
+        <!-- Hangman parts (shown based on wrong guesses) -->
+        <div
+          class="hangman-part hangman-head {% if game_state.lives <= 5 %}visible{% endif %}"
+        ></div>
+        <div
+          class="hangman-part hangman-body {% if game_state.lives <= 4 %}visible{% endif %}"
+        ></div>
+        <div
+          class="hangman-part hangman-left-arm {% if game_state.lives <= 3 %}visible{% endif %}"
+        ></div>
+        <div
+          class="hangman-part hangman-right-arm {% if game_state.lives <= 2 %}visible{% endif %}"
+        ></div>
+        <div
+          class="hangman-part hangman-left-leg {% if game_state.lives <= 1 %}visible{% endif %}"
+        ></div>
+        <div
+          class="hangman-part hangman-right-leg {% if game_state.lives <= 0 %}visible{% endif %}"
+        ></div>
+      </div>
+      <div class="gallows-bottom">
+        <div class="lives-display">Lives: {{ game_state.lives_display }}</div>
+      </div>
+    </div>
+    <!-- Right Side: Word Display -->
+    <div class="word-section">
+      <div class="word-display">{{ game_state.word_display }}</div>
+    </div>
+  </div>
+
+  <!-- Virtual Keyboard -->
+  <div class="virtual-keyboard">
+    <h3>Select a Letter</h3>
+    <div class="keyboard-grid">
+      {% for letter in valid_letters %}
+      <button
+        class="letter-btn"
+        data-letter="{{ letter }}"
+        onclick="guessLetter('{{ letter }}')"
+      >
+        {{ letter }}
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="game-data">
+  {{ game_state | tojson }}
+</script>
+<script>
+  // Parse game data from JSON scripts
+  const gameData = JSON.parse(document.getElementById("game-data").textContent);
+  const level = "{{ level }}";
+
+  let gameState = {
+    word: gameData.word,
+    word_display: gameData.word_display,
+    lives_display: gameData.lives_display,
+    guessedLetters: gameData.guessed_letters,
+    wrongGuesses: gameData.wrong_guesses,
+    lives: gameData.lives,
+    score: gameData.score,
+    gameOver: gameData.game_over,
+    level: level,
+  };
+
+  function guessLetter(letter) {
+    // Check if game is over
+    if (gameState.gameOver) return;
+
+    // Check if letter already guessed
+    if (
+      gameState.guessedLetters.includes(letter) ||
+      gameState.wrongGuesses.includes(letter)
+    )
+      return;
+
+    // Disable the button immediately
+    const btn = document.querySelector(`[data-letter="${letter}"]`);
+    btn.disabled = true;
+    btn.classList.add("disabled");
+
+    // Send guess to backend
+    fetch("/guess", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        letter: letter,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Update game state from backend
+          updateGameStateFromBackend(data.game_state);
+
+          // Check if word was completed
+          if (data.word_completion.word_completed) {
+            showMessage(`Word completed! Score: +1`, "success");
+            // Re-enable all buttons since game state was reset
+            enableAllButtons();
+            return;
+          }
+
+          // Show result message
+          if (data.result.correct) {
+            showMessage(data.result.message, "success");
+          } else {
+            showMessage(data.result.message, "error");
+          }
+
+          // Check if game is over
+          if (data.game_state.game_over) {
+            showGameOver();
+          }
+        } else {
+          // Re-enable button on error
+          btn.disabled = false;
+          btn.classList.remove("disabled");
+          showMessage(data.error, "error");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Re-enable button on error
+        btn.disabled = false;
+        btn.classList.remove("disabled");
+        showMessage("Error processing guess", "error");
+      });
+  }
+
+  function updateGameStateFromBackend(newGameState) {
+    // Update local state from backend response
+    gameState.word = newGameState.word;
+    gameState.word_display = newGameState.word_display;
+    gameState.lives_display = newGameState.lives_display;
+    gameState.guessedLetters = newGameState.guessed_letters;
+    gameState.wrongGuesses = newGameState.wrong_guesses;
+    gameState.lives = newGameState.lives;
+    gameState.score = newGameState.score;
+    gameState.gameOver = newGameState.game_over;
+
+    // Update the display
+    updateGameDisplay();
+  }
+
+  function updateGameDisplay() {
+    // Update displays using backend-provided formatted data
+    document.querySelector(".word-display").textContent =
+      gameState.word_display || "";
+    document.querySelector(
+      ".score-display"
+    ).textContent = `Score: ${gameState.score}`;
+    document.querySelector(".lives-display").textContent = `Lives: ${
+      gameState.lives_display || ""
+    }`;
+
+    // Update gallows based on lives
+    updateGallows(gameState.lives);
+  }
+
+  function updateGallows(lives) {
+    // Show hangman parts based on lives remaining
+    const parts = [
+      ".hangman-head",
+      ".hangman-body",
+      ".hangman-left-arm",
+      ".hangman-right-arm",
+      ".hangman-left-leg",
+      ".hangman-right-leg",
+    ];
+
+    parts.forEach((part, index) => {
+      const element = document.querySelector(part);
+      if (element) {
+        if (lives <= 5 - index) {
+          element.classList.add("visible");
+        } else {
+          element.classList.remove("visible");
+        }
+      }
+    });
+  }
+
+  function showMessage(message, type) {
+    // Create temporary message display
+    const messageDiv = document.createElement("div");
+    messageDiv.className = `message ${type}`;
+    messageDiv.textContent = message;
+    messageDiv.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      z-index: 1000;
+      background: ${
+        type === "success"
+          ? "#27ae60"
+          : type === "error"
+          ? "#e74c3c"
+          : "#3498db"
+      };
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      min-width: 200px;
+      text-align: center;
+    `;
+
+    document.body.appendChild(messageDiv);
+
+    setTimeout(() => {
+      if (messageDiv.parentNode) {
+        messageDiv.parentNode.removeChild(messageDiv);
+      }
+    }, 2000);
+  }
+
+  function showGameOver() {
+    // Show game over modal
+    const modal = document.createElement("div");
+    modal.className = "game-over";
+    modal.innerHTML = `
+      <div>
+        <h2>Game Over!</h2>
+        <p>Final Score: ${gameState.score}</p>
+        <p>The word was: <strong>${gameState.word}</strong></p>
+        <a href="/select-level" class="btn btn-primary">Play Again</a>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+  }
+
+  function enableAllButtons() {
+    // Re-enable all letter buttons (used when word is completed)
+    const allButtons = document.querySelectorAll(".letter-btn");
+    allButtons.forEach((btn) => {
+      btn.disabled = false;
+      btn.classList.remove("disabled");
+    });
+  }
+</script>
+{% endblock %}

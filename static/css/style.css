@@ -10,6 +10,13 @@ Clean, modern CSS for the hangman game interface
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
@@ -21,7 +28,10 @@ body {
 .container {
   max-width: 84%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header styles */
@@ -153,10 +163,20 @@ header h1 {
 
 /* Footer */
 footer {
-  text-align: center;
+  background: transparent;
   color: white;
-  font-size: 0.9rem;
-  opacity: 0.8;
+  text-align: center;
+  padding: 10px 20px;
+  margin-top: auto;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  line-height: 1.4;
 }
 
 /* Responsive design */
@@ -224,7 +244,7 @@ footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .level-card {
@@ -310,7 +330,7 @@ footer {
 
 .navigation-footer {
   text-align: center;
-  padding-top: 2rem;
+  padding-top: 1.5rem;
   border-top: 2px solid #e9ecef;
 }
 

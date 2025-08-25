@@ -15,8 +15,6 @@ from src.web.app import create_app
 
 
 class TestWebHome:
-    """Minimal web integration test."""
-    
     @pytest.fixture
     def client(self):
         """Create test client."""

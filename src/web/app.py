@@ -13,20 +13,19 @@ def create_app() -> Flask:
     """
     Create and configure Flask application.
     """
-    app = Flask(__name__, 
-                template_folder='../../templates',
-                static_folder='../../static')
-    
+    app = Flask(
+        __name__, template_folder="../../templates", static_folder="../../static"
+    )
+
     # Configure app
-    app.config['SECRET_KEY'] = 'dylan-hangman-flask'
-    app.config['DEBUG'] = True  # Remove in production
-    
+    app.config["DEBUG"] = True
+
     # Register blueprints
     app.register_blueprint(hangman_bp)
-    
+
     return app
 
 
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True)
+if __name__ == "__main__":
+    flask_app = create_app()
+    flask_app.run(debug=True, port=3001)
